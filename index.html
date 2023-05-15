@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+    <title>SBOM Tool</title>
+</head>
+<body>
+    <h1>Make Software Bill of Materials</h1>
+    <form action="/add" method="post" enctype="multipart/form-data" >
+      <p>Output Format<br>
+      <input type="radio" name="format" value="SPDX" onclick=ShowChartA()>SPDX
+		  <input type="radio" name="format" value="CycloneDX" onclick=ShowChartB()>CycloneDX
+      <br>
+      
+      <p>Save File Format<br>
+      <input type="radio" name="format1" value="xml">.xml
+		  <input type="radio" name="format1" value="json">.json
+
+        <div>
+          <input type="file" name="file">
+        </div>
+        <div>
+          <input type="submit" value="Submit">
+        </div>
+    </form>
+
+    <br>
+    <table id="table1" style="display:none" border="1" width="400">
+      <tr>
+        <th>Based Language</th>
+        <th>Required File</th>
+      </tr>
+      <tr align="center">
+        <td>Alpine</td>
+        <td>apk</td>
+      </tr>
+      <tr align="center">
+        <td>C</td>
+        <td>conan</td>
+      </tr>
+      <tr align="center">
+        <td>C++</td>
+        <td>conan</td>
+      </tr>
+      <tr align="center">
+        <td>Dart</td>
+        <td>pubs</td>
+      </tr>
+      <tr align="center">
+        <td>Debian</td>
+        <td>dpkg</td>
+      </tr>
+      <tr align="center">
+        <td>Dotnet</td>
+        <td>deps.json</td>
+      </tr>
+      <tr align="center">
+        <td>Object-C</td>
+        <td>cocoapods</td>
+      </tr>
+      <tr align="center">
+        <td>Elixir</td>
+        <td>mix</td>
+      </tr>
+      <tr align="center">
+        <td>Erlang</td>
+        <td>rebar3</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="2">Go</td>
+        <td>go.mod</td>
+      </tr>
+      <tr align="center">
+        <td>Go binaries</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="2">Haskell</td>
+        <td>cabal</td>
+      </tr>
+      <tr align="center">
+        <td>stack</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="7">Java</td>
+        <td>jar</td>
+      </tr>
+      <tr align="center">
+        <td>ear</td>
+      </tr>  
+      <tr align="center">
+        <td>war</td>
+      </tr>
+      <tr align="center">
+        <td>par</td>
+      </tr>  
+      <tr align="center">
+        <td>sar</td>
+      </tr><tr align="center">
+        <td>nar</td>
+      </tr>  
+      <tr align="center">
+        <td>native-image</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="2">Javascript</td>
+        <td>npm</td>
+      </tr>
+      <tr align="center">
+        <td>yarn</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="2">Jenkins Plugins</td>
+        <td>jpi</td>
+      </tr>
+      <tr align="center">
+        <td>hpi</td>
+      </tr>
+      <tr align="center">
+        <td>Linux kernel archives</td>
+        <td>vmlinz</td>
+      </tr>
+      <tr align="center">
+        <td>Linux kernel modules</td>
+        <td>ko</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="3">Nix</td>
+        <td>output in</td>
+      </tr>
+      <tr align="center">
+        <td>nix</td>
+      </tr>  
+      <tr align="center">
+        <td>store</td>
+      </tr>  
+      <tr align="center">
+        <td>PHP</td>
+        <td>composer</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="5">Python</td>
+        <td>requirement.txt</td>
+      </tr>
+      <tr align="center">
+        <td>poetry.lock</td>
+      </tr>  
+      <tr align="center">
+        <td>Pipfile.lock</td>
+      </tr> 
+      <tr align="center">
+        <td>wheel</td>
+      </tr>  
+      <tr align="center">
+        <td>egg</td>
+      </tr>  
+      <tr align="center">
+        <td>Red Hat</td>
+        <td>rpm</td>
+      </tr>
+      <tr align="center">
+        <td>Ruby</td>
+        <td>gem</td>
+      </tr>
+      <tr align="center">
+        <td>Rust</td>
+        <td>cargo.lock</td>
+      </tr>
+      <tr align="center">
+        <td>Swift</td>
+        <td>cocoapods</td>
+      </tr>
+
+    </table>
+
+    <table id="table2" style="display:none" border="1" width="400">
+      <tr>
+        <th>Based Language</th>
+        <th>Required File</th>
+      </tr>
+      <tr align="center">
+        <td>Alpine</td>
+        <td>apk</td>
+      </tr>
+      <tr align="center">
+        <td>C</td>
+        <td>conan</td>
+      </tr>
+      <tr align="center">
+        <td>C++</td>
+        <td>conan</td>
+      </tr>
+      <tr align="center">
+        <td>Dart</td>
+        <td>pubs</td>
+      </tr>
+      <tr align="center">
+        <td>Debian</td>
+        <td>dpkg</td>
+      </tr>
+      <tr align="center">
+        <td>Dotnet</td>
+        <td>deps.json</td>
+      </tr>
+      <tr align="center">
+        <td>Object-C</td>
+        <td>cocoapods</td>
+      </tr>
+      <tr align="center">
+        <td>Elixir</td>
+        <td>mix</td>
+      </tr>
+      <tr align="center">
+        <td>Erlang</td>
+        <td>rebar3</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="2">Go</td>
+        <td>go.mod</td>
+      </tr>
+      <tr align="center">
+        <td>Go binaries</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="2">Haskell</td>
+        <td>cabal</td>
+      </tr>
+      <tr align="center">
+        <td>stack</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="7">Java</td>
+        <td>jar</td>
+      </tr>
+      <tr align="center">
+        <td>ear</td>
+      </tr>  
+      <tr align="center">
+        <td>war</td>
+      </tr>
+      <tr align="center">
+        <td>par</td>
+      </tr>  
+      <tr align="center">
+        <td>sar</td>
+      </tr><tr align="center">
+        <td>nar</td>
+      </tr>  
+      <tr align="center">
+        <td>native-image</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="2">Javascript</td>
+        <td>npm</td>
+      </tr>
+      <tr align="center">
+        <td>yarn</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="2">Jenkins Plugins</td>
+        <td>jpi</td>
+      </tr>
+      <tr align="center">
+        <td>hpi</td>
+      </tr>
+      <tr align="center">
+        <td>Linux kernel archives</td>
+        <td>vmlinz</td>
+      </tr>
+      <tr align="center">
+        <td>Linux kernel modules</td>
+        <td>ko</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="3">Nix</td>
+        <td>output in</td>
+      </tr>
+      <tr align="center">
+        <td>nix</td>
+      </tr>  
+      <tr align="center">
+        <td>store</td>
+      </tr>  
+      <tr align="center">
+        <td>PHP</td>
+        <td>composer</td>
+      </tr>
+      <tr align="center">
+        <td rowspan="5">Python</td>
+        <td>requirement.txt</td>
+      </tr>
+      <tr align="center">
+        <td>poetry.lock</td>
+      </tr>  
+      <tr align="center">
+        <td>Pipfile.lock</td>
+      </tr> 
+      <tr align="center">
+        <td>wheel</td>
+      </tr>  
+      <tr align="center">
+        <td>egg</td>
+      </tr>  
+      <tr align="center">
+        <td>Red Hat</td>
+        <td>rpm</td>
+      </tr>
+      <tr align="center">
+        <td>Ruby</td>
+        <td>gem</td>
+      </tr>
+      <tr align="center">
+        <td>Rust</td>
+        <td>cargo.lock</td>
+      </tr>
+      <tr align="center">
+        <td>Swift</td>
+        <td>cocoapods</td>
+      </tr>
+
+    </table>
+
+
+    <script>
+      function ShowChartA() {
+        table2.style.display = "none";
+        table1.style.display = 'table';
+        }
+
+      function ShowChartB() {
+        table1.style.display = "none";
+        table2.style.display = 'table';
+        }
+    </script>
+
+</body>
+</html>
